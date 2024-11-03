@@ -1,15 +1,28 @@
-<h2 mat-dialog-title>Book Time Slot</h2>
+<section class="booking-dialog">
+  <h6 mat-dialog-title>Book Time Slot</h6>
 
-<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="fill">
-    <mat-label>Start Time</mat-label>
-    <input type="time" matInput formControlName="startTime" />
-  </mat-form-field>
+  <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+    <section class="time-slots">
+      <mat-form-field appearance="fill">
+        <mat-label>Start Time</mat-label>
+        <input type="time" matInput formControlName="startTime" />
+      </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>End Time</mat-label>
-    <input type="time" matInput formControlName="endTime" />
-  </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>End Time</mat-label>
+        <input type="time" matInput formControlName="endTime" />
+      </mat-form-field>
+    </section>
 
-  <button mat-raised-button type="submit" color="primary">Book</button>
-</form>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="label" />
+    </mat-form-field>
+
+    @if (bookingForm.hasError('minDuration')) {
+      <mat-error>Minimal duration should be at least 30 min</mat-error>
+    }
+
+    <button mat-flat-button type="submit" color="primary">Book</button>
+  </form>
+</section>

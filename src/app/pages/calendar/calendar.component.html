@@ -1,7 +1,7 @@
 <section class="calendar-page">
   <app-calendar-sidebar
     [appointments]="(appointments$ | async) ?? []"
-    (updateAppointment)="updateAppointments($event)" />
+    (openDiallog)="openBookingDialog()" />
   <section class="calendar-content">
     <app-day-view [appointments]="(appointments$ | async) ?? []" />
   </section>

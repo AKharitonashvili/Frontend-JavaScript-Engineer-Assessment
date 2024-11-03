@@ -15,7 +15,9 @@
             appointment of appointments | filterAppointments: hour;
             track $index
           ) {
-            <div class="appointment" [ngStyle]="appointment | appointmentSize">
+            <div
+              class="appointment"
+              [ngStyle]="appointment | appointmentSize: $index">
               {{ appointment.label }}: {{ appointment.start }} -
               {{ appointment.end }}
             </div>

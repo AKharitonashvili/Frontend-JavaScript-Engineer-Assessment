@@ -8,6 +8,8 @@ import { selectAppointmentsByDate } from '../../stores/appointments/appointments
 import { addAppointment } from '../../stores/appointments/appointments.actions';
 import { AsyncPipe } from '@angular/common';
 import { tap } from 'rxjs';
+import { BookingDialogComponent } from '../../ui/dialogs/booking-dialog/booking-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-calendar',
@@ -24,6 +26,7 @@ import { tap } from 'rxjs';
 })
 export class CalendarComponent {
   private readonly store = inject(Store);
+  private readonly dialog = inject(MatDialog);
 
   appointments$ = this.store
     .select(selectAppointmentsByDate(this.getCurrentDate()))
@@ -41,9 +44,27 @@ export class CalendarComponent {
   getCurrentDate(): string {
     const date = new Date();
     const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
 
     return `${day}-${month}-${year}`;
+  }
+
+  openBookingDialog() {
+    const dialogRef = this.dialog.open(BookingDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addAppointment(result.startTime, result.endTime, result.label);
+      }
+    });
+  }
+
+  addAppointment(start: string, end: string, label: string) {
+    this.updateAppointments({
+      start,
+      end,
+      label,
+    });
   }
 }

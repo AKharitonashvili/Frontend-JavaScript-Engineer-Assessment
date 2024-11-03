@@ -8,8 +8,6 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatDialog } from '@angular/material/dialog';
-import { BookingDialogComponent } from '../../../ui/dialogs/booking-dialog/booking-dialog.component';
 import { Appointments } from '../../../shared/interfaces/apointments.interface';
 
 @Component({
@@ -24,24 +22,5 @@ import { Appointments } from '../../../shared/interfaces/apointments.interface';
 export class CalendarSidebarComponent {
   @Input({ required: true }) appointments!: Appointments[];
   @Output() updateAppointment = new EventEmitter<Appointments>();
-
-  constructor(private dialog: MatDialog) {}
-
-  openBookingDialog() {
-    const dialogRef = this.dialog.open(BookingDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.addAppointment(result.startTime, result.endTime);
-      }
-    });
-  }
-
-  addAppointment(start: string, end: string) {
-    this.updateAppointment.emit({
-      start,
-      end,
-      label: `Task `,
-    });
-  }
+  @Output() openDiallog = new EventEmitter<void>();
 }

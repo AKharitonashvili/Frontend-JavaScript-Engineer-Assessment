@@ -6,9 +6,13 @@ import { Appointments } from '../../../../shared/interfaces/apointments.interfac
   standalone: true,
 })
 export class AppointmentSizePipe implements PipeTransform {
-  transform(appointment: Appointments): {
+  transform(
+    appointment: Appointments,
+    index: number
+  ): {
     top: string;
     bottom: string;
+    left: string;
   } {
     const { start, end } = appointment;
     const [startHour, startMinute] = start.split(':').map(Number);
@@ -31,6 +35,7 @@ export class AppointmentSizePipe implements PipeTransform {
     return {
       top: `${topPercentage}%`,
       bottom: `${bottomPercentage}%`,
+      left: `${index * 5}%`,
     };
   }
 }
