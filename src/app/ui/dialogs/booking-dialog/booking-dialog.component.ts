@@ -10,6 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BookingForm } from './interfaces/booking-dialog.interfaces';
+import { minDuration } from './validators/min-duration.validator';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -28,38 +29,22 @@ export class BookingDialogComponent {
   bookingForm: FormGroup<BookingForm>;
 
   constructor(private dialogRef: MatDialogRef<BookingDialogComponent>) {
-    this.bookingForm = new FormGroup({
-      startTime: new FormControl<string | null>('', [Validators.required]),
-      endTime: new FormControl<string | null>('', [Validators.required]),
-      label: new FormControl<string | null>('', [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-    });
+    this.bookingForm = new FormGroup(
+      {
+        startTime: new FormControl<string | null>('', [Validators.required]),
+        endTime: new FormControl<string | null>('', [Validators.required]),
+        label: new FormControl<string | null>('Task', [
+          Validators.required,
+          Validators.minLength(4),
+        ]),
+      },
+      { validators: minDuration() }
+    );
   }
 
   onSubmit() {
-    console.log(this.bookingForm.controls.label);
-    if (this.calculateDuration() < 30) {
-      this.bookingForm.setErrors({ minDuration: true });
-    } else {
-      this.bookingForm.setErrors(null);
-    }
-
     if (this.bookingForm.valid) {
       this.dialogRef.close(this.bookingForm.value);
     }
-  }
-
-  calculateDuration(): number {
-    const { startTime, endTime } = this.bookingForm.value;
-    if (!startTime || !endTime) return 0;
-
-    const [startHour, startMinute] = startTime.split(':').map(Number);
-    const [endHour, endMinute] = endTime.split(':').map(Number);
-
-    const startTotalMinutes = startHour * 60 + startMinute;
-    const endTotalMinutes = endHour * 60 + endMinute;
-    return endTotalMinutes - startTotalMinutes;
   }
 }

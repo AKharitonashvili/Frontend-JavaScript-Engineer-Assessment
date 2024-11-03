@@ -22,6 +22,10 @@
       </mat-form-field>
     </section>
 
+    @if (bookingForm.hasError('minDuration')) {
+      <mat-error>Minimal duration should be at least 30 min</mat-error>
+    }
+
     <mat-form-field appearance="fill">
       <mat-label>Label</mat-label>
       <input type="text" matInput formControlName="label" />
@@ -38,10 +42,6 @@
         </mat-error>
       }
     </mat-form-field>
-
-    @if (bookingForm.hasError('minDuration')) {
-      <mat-error>Minimal duration should be at least 30 min</mat-error>
-    }
 
     <button mat-flat-button type="submit" color="primary">Book</button>
   </form>
