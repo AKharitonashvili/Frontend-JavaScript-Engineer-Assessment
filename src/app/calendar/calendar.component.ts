@@ -8,23 +8,23 @@ import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
 import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { CalendarSidebarComponent } from './calendar-sidebar/calendar-sidebar.component';
-import { DayViewComponent } from './day-view/day-view.component';
 import { MatButtonModule } from '@angular/material/button';
-import { BookingDialogComponent } from '../../ui/dialogs/booking-dialog/booking-dialog.component';
-import { Appointments } from '../../shared/interfaces/apointments.interface';
+import { CalendarSidebarComponent } from './components/calendar-sidebar/calendar-sidebar.component';
+import { DayViewComponent } from './components/day-view/day-view.component';
+import { BookingDialogComponent } from './components/dialogs/booking-dialog/booking-dialog.component';
+import { BookinDialogStatus } from './components/dialogs/booking-dialog/interfaces/booking-dialog.interfaces';
+import {
+  updateAppointment,
+  addAppointment,
+  removeAppointment,
+} from './stores/appointments/appointments.actions';
+import { Appointments } from './stores/appointments/appointments.interface';
+import { selectAppointmentsByDate } from './stores/appointments/appointments.selectors';
+import { updateSelectedDay } from './stores/selected-day/selected-day.actions';
 import {
   selectParsedSelectedDay,
   selectSelectedDate,
-} from '../../stores/selected-day/selected-day.selectors';
-import {
-  addAppointment,
-  removeAppointment,
-  updateAppointment,
-} from '../../stores/appointments/appointments.actions';
-import { selectAppointmentsByDate } from '../../stores/appointments/appointments.selectors';
-import { updateSelectedDay } from '../../stores/selected-day/selected-day.actions';
-import { BookinDialogStatus } from '../../ui/dialogs/booking-dialog/interfaces/booking-dialog.interfaces';
+} from './stores/selected-day/selected-day.selectors';
 
 @Component({
   selector: 'app-calendar',

@@ -19,8 +19,8 @@ import {
   BookinDialogStatus,
 } from './interfaces/booking-dialog.interfaces';
 import { minDuration } from './validators/min-duration.validator';
-import { Appointments } from '../../../shared/interfaces/apointments.interface';
 import { MatIconModule } from '@angular/material/icon';
+import { Appointments } from '../../../stores/appointments/appointments.interface';
 
 @Component({
   selector: 'app-booking-dialog',

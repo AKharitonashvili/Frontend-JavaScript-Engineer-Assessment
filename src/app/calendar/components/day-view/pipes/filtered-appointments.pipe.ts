@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Appointments } from '../../../../shared/interfaces/apointments.interface';
+import { Appointments } from '../../../stores/appointments/appointments.interface';
 
 @Pipe({
   name: 'filterAppointments',

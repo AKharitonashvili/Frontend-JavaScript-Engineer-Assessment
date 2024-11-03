@@ -5,12 +5,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './layout/header/header.component';
 import { Store } from '@ngrx/store';
-import { selectSelectedDate } from './stores/selected-day/selected-day.selectors';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { updateSelectedDay } from './stores/selected-day/selected-day.actions';
+import { updateSelectedDay } from './calendar/stores/selected-day/selected-day.actions';
+import { selectSelectedDate } from './calendar/stores/selected-day/selected-day.selectors';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',

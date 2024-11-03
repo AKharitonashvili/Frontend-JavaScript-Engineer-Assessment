@@ -4,3 +4,5 @@ export interface Appointments {
   label: string;
   id: string;
 }
+
+export type AppointmentsState = Record<string, Appointments[]>;

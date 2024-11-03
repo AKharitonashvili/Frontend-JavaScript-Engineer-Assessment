@@ -6,9 +6,9 @@ import {
   Output,
 } from '@angular/core';
 import { AsyncPipe, NgStyle } from '@angular/common';
-import { Appointments } from '../../../shared/interfaces/apointments.interface';
 import { FilterAppointmentsPipe } from './pipes/filtered-appointments.pipe';
 import { AppointmentSizePipe } from './pipes/appointment-size.pipe';
+import { Appointments } from '../../stores/appointments/appointments.interface';
 
 @Component({
   selector: 'app-day-view',

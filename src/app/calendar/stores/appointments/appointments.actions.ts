@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Appointments } from '../../shared/interfaces/apointments.interface';
+import { Appointments } from './appointments.interface';
 
 export const addAppointment = createAction(
   '[Appointments] Add Appointment',

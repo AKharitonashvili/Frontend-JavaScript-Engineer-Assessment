@@ -4,10 +4,10 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { APPOINTMENTS } from './stores/appointments/appointments.selectors';
-import { appointmentsReducer } from './stores/appointments/appointments.reducer';
-import { selectedDayReducer } from './stores/selected-day/selected-day.reducer';
-import { SELECTED_DAY } from './stores/selected-day/selected-day.selectors';
+import { appointmentsReducer } from './calendar/stores/appointments/appointments.reducer';
+import { APPOINTMENTS } from './calendar/stores/appointments/appointments.selectors';
+import { selectedDayReducer } from './calendar/stores/selected-day/selected-day.reducer';
+import { SELECTED_DAY } from './calendar/stores/selected-day/selected-day.selectors';
 
 export const appConfig: ApplicationConfig = {
   providers: [
