@@ -1,0 +1,34 @@
+.calendar-page {
+  display: flex;
+  app-calendar-sidebar {
+    width: 100%;
+    max-width: 16rem;
+  }
+
+  .calendar-content {
+    padding: 2rem 1rem;
+    width: 100%;
+    .selected-day-info {
+      border-bottom: 0.0625rem solid var(--border-color);
+      padding: 0.25rem 0rem;
+      .selected-day {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--primary-color);
+        color: var(--white-color);
+        border-radius: 50%;
+        position: relative;
+
+        .weekday {
+          position: absolute;
+          top: -1.25rem;
+          font-size: 0.75rem;
+          color: var(--primary-color);
+        }
+      }
+    }
+  }
+}

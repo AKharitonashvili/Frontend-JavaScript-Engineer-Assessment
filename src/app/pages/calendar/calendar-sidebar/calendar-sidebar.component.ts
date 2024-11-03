@@ -1,0 +1,15 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+@Component({
+  selector: 'app-calendar-sidebar',
+  standalone: true,
+  imports: [MatButtonModule, MatDatepickerModule],
+  providers: [provideNativeDateAdapter()],
+  templateUrl: './calendar-sidebar.component.html',
+  styleUrl: './calendar-sidebar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CalendarSidebarComponent {}

@@ -1,0 +1,55 @@
+.day-view {
+  .header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 1rem;
+
+    .date-info {
+      display: flex;
+      align-items: center;
+
+      .day-name {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+      }
+
+      .date-circle {
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: var(--white-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+      }
+    }
+  }
+
+  .time-slots {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    padding: 0rem 1rem;
+    height: calc(100vh - 12.5rem);
+
+    .time-slot {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      height: 3.75rem;
+      align-items: center;
+
+      .time-label {
+        width: 3.75rem;
+        font-size: 0.875rem;
+      }
+
+      .appointment-space {
+        flex-grow: 1;
+        height: 2.5rem;
+        border-left: 0.0625rem solid var(--border-color);
+      }
+    }
+  }
+}

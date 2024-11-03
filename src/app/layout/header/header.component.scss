@@ -1,0 +1,15 @@
+header {
+  display: flex;
+  gap: 2rem;
+  padding: 1.25rem;
+  border-bottom: 0.0625rem solid var(--border-color);
+  & > section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .arrow-buttons {
+    display: flex;
+    align-items: center;
+  }
+}

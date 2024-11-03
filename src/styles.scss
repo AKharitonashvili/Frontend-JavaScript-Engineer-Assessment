@@ -1,4 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+button,
+a {
+  cursor: pointer;
+}
+
+.mat-body-large p,
+.mat-typography .mat-body-large p,
+.mat-typography p,
+.mat-display-small,
+.mat-typography .mat-display-small,
+.mat-typography h1,
+.mat-typography h2,
+.mat-typography h3,
+.mat-typography h4,
+.mat-typography h5,
+.mat-typography h6 {
+  margin: 0rem;
+}
+
+:root {
+  --primary-color: rgb(26, 115, 232);
+  --border-color: rgb(218, 220, 224);
+  --white-color: #fff;
+}
