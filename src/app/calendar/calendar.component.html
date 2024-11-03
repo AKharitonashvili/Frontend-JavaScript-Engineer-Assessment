@@ -7,6 +7,12 @@
     </app-calendar-sidebar>
 
     <section class="calendar-content">
+      <div class="header">
+        <div class="date-info">
+          <div class="date-circle">{{ vm.selectedDate | date: 'dd' }}</div>
+          <span class="day-name">{{ vm.selectedDate | date: 'EEEE' }}</span>
+        </div>
+      </div>
       <app-day-view
         [appointments]="vm.appointments"
         (editAppointmentClick)="openBookingDialog($event)"></app-day-view>

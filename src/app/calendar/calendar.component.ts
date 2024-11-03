@@ -11,8 +11,6 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { CalendarSidebarComponent } from './components/calendar-sidebar/calendar-sidebar.component';
 import { DayViewComponent } from './components/day-view/day-view.component';
-import { BookingDialogComponent } from './components/dialogs/booking-dialog/booking-dialog.component';
-import { BookinDialogStatus } from './components/dialogs/booking-dialog/interfaces/booking-dialog.interfaces';
 import {
   updateAppointment,
   addAppointment,
@@ -25,6 +23,8 @@ import {
   selectParsedSelectedDay,
   selectSelectedDate,
 } from './stores/selected-day/selected-day.selectors';
+import { BookingDialogComponent } from './components/booking-dialog/booking-dialog.component';
+import { BookinDialogStatus } from './components/booking-dialog/interfaces/booking-dialog.interfaces';
 
 @Component({
   selector: 'app-calendar',
