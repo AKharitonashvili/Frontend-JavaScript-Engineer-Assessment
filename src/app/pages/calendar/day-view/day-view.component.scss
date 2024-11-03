@@ -37,7 +37,7 @@
     .time-slot {
       display: flex;
       border-bottom: 1px solid var(--border-color);
-      height: 3.75rem;
+      height: 3rem;
       align-items: center;
 
       .time-label {
@@ -47,9 +47,20 @@
 
       .appointment-space {
         flex-grow: 1;
-        height: 2.5rem;
+        height: 3rem;
         border-left: 0.0625rem solid var(--border-color);
+        position: relative;
       }
     }
   }
+}
+
+.appointment {
+  position: absolute;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 4px;
+  border-radius: 4px;
+  width: 100%;
+  border: 0.0625rem solid var(--border-color);
 }

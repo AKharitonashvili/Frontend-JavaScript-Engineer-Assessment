@@ -1,6 +1,8 @@
 <section class="calendar-page">
-  <app-calendar-sidebar />
+  <app-calendar-sidebar
+    [appointments]="(appointments$ | async) ?? []"
+    (updateAppointment)="updateAppointments($event)" />
   <section class="calendar-content">
-    <app-day-view />
+    <app-day-view [appointments]="(appointments$ | async) ?? []" />
   </section>
 </section>

@@ -10,7 +10,17 @@
     @for (hour of hours; track $index) {
       <div class="time-slot">
         <div class="time-label">{{ hour }}:00</div>
-        <div class="appointment-space"></div>
+        <div class="appointment-space">
+          @for (
+            appointment of appointments | filterAppointments: hour;
+            track $index
+          ) {
+            <div class="appointment" [ngStyle]="appointment | appointmentSize">
+              {{ appointment.label }}: {{ appointment.start }} -
+              {{ appointment.end }}
+            </div>
+          }
+        </div>
       </div>
     }
   </div>
