@@ -13,14 +13,16 @@
         <div class="appointment-space">
           @for (
             appointment of appointments | filterAppointments: hour;
-            track $index
+            track $index;
+            let hourIndex = $index
           ) {
-            <div
+            <button
               class="appointment"
-              [ngStyle]="appointment | appointmentSize: $index">
+              [ngStyle]="appointment | appointmentSize: hourIndex"
+              (click)="editAppointmentHandler(appointment)">
               {{ appointment.label }}: {{ appointment.start }} -
               {{ appointment.end }}
-            </div>
+            </button>
           }
         </div>
       </div>

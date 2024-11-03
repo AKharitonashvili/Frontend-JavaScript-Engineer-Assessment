@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import {
   FormGroup,
   Validators,
@@ -6,11 +11,16 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { BookingForm } from './interfaces/booking-dialog.interfaces';
+import {
+  BookingForm,
+  BookinDialogStatus,
+} from './interfaces/booking-dialog.interfaces';
 import { minDuration } from './validators/min-duration.validator';
+import { Appointments } from '../../../shared/interfaces/apointments.interface';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -20,20 +30,30 @@ import { minDuration } from './validators/min-duration.validator';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './booking-dialog.component.html',
   styleUrls: ['./booking-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookingDialogComponent {
-  bookingForm: FormGroup<BookingForm>;
+export class BookingDialogComponent implements OnInit {
+  readonly data = inject<{
+    appointment: Appointments;
+  }>(MAT_DIALOG_DATA);
+  private dialogRef = inject(MatDialogRef<BookingDialogComponent>);
 
-  constructor(private dialogRef: MatDialogRef<BookingDialogComponent>) {
+  bookingForm!: FormGroup<BookingForm>;
+
+  ngOnInit(): void {
     this.bookingForm = new FormGroup(
       {
-        startTime: new FormControl<string | null>('', [Validators.required]),
-        endTime: new FormControl<string | null>('', [Validators.required]),
-        label: new FormControl<string | null>('Task', [
+        startTime: new FormControl(this.data?.appointment?.start, [
+          Validators.required,
+        ]),
+        endTime: new FormControl(this.data?.appointment?.end, [
+          Validators.required,
+        ]),
+        label: new FormControl(this.data?.appointment?.label ?? 'Task', [
           Validators.required,
           Validators.minLength(4),
         ]),
@@ -44,7 +64,14 @@ export class BookingDialogComponent {
 
   onSubmit() {
     if (this.bookingForm.valid) {
-      this.dialogRef.close(this.bookingForm.value);
+      this.dialogRef.close({
+        result: this.bookingForm.value,
+        status: BookinDialogStatus.CONFIRM,
+      });
     }
+  }
+
+  removeAppointment() {
+    this.dialogRef.close({ status: BookinDialogStatus.DELETE });
   }
 }

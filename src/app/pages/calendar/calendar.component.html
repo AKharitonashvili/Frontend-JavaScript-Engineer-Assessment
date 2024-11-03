@@ -1,10 +1,15 @@
 <section class="calendar-page">
-  <app-calendar-sidebar
-    [appointments]="(appointments$ | async) ?? []"
-    [selectedDate]="selectedDate$ | async"
-    (openDiallog)="openBookingDialog()"
-    (selectedChange)="selectedDateChange($event)" />
-  <section class="calendar-content">
-    <app-day-view [appointments]="(appointments$ | async) ?? []" />
-  </section>
+  @if (vm$ | async; as vm) {
+    <app-calendar-sidebar
+      [selectedDate]="vm.selectedDate"
+      (openBookingDialog)="openBookingDialog()"
+      (selectedChange)="onSelectedDateChange($event)">
+    </app-calendar-sidebar>
+
+    <section class="calendar-content">
+      <app-day-view
+        [appointments]="vm.appointments"
+        (editAppointmentClick)="openBookingDialog($event)"></app-day-view>
+    </section>
+  }
 </section>

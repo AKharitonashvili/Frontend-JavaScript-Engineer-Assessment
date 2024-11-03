@@ -8,7 +8,6 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { Appointments } from '../../../shared/interfaces/apointments.interface';
 
 @Component({
   selector: 'app-calendar-sidebar',
@@ -20,8 +19,7 @@ import { Appointments } from '../../../shared/interfaces/apointments.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarSidebarComponent {
-  @Input({ required: true }) appointments!: Appointments[];
   @Input({ required: true }) selectedDate?: Date | null;
-  @Output() openDiallog = new EventEmitter<void>();
+  @Output() openBookingDialog = new EventEmitter<void>();
   @Output() selectedChange = new EventEmitter<Date>();
 }

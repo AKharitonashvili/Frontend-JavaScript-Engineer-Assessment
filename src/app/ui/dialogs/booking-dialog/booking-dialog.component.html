@@ -1,5 +1,15 @@
 <section class="booking-dialog">
-  <h6 mat-dialog-title>Book Time Slot</h6>
+  <section class="dialog-heading">
+    <h6 mat-dialog-title>Book Time Slot</h6>
+
+    @if (data.appointment) {
+      <button mat-icon-button (click)="removeAppointment()">
+        <mat-icon>
+          <span class="material-symbols-outlined"> delete </span>
+        </mat-icon>
+      </button>
+    }
+  </section>
 
   <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
     <section class="time-slots">

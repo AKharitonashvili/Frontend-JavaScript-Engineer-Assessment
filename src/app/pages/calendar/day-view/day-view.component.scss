@@ -36,8 +36,8 @@
 
     .time-slot {
       display: flex;
-      border-bottom: 1px solid var(--border-color);
-      height: 3rem;
+      border-bottom: 0.0625rem solid var(--border-color);
+      height: 4rem;
       align-items: center;
 
       .time-label {
@@ -47,7 +47,7 @@
 
       .appointment-space {
         flex-grow: 1;
-        height: 3rem;
+        height: 4rem;
         border-left: 0.0625rem solid var(--border-color);
         position: relative;
 
@@ -56,10 +56,11 @@
           background-color: var(--primary-color);
           color: var(--white-color);
           font-size: 0.75rem;
-          padding: 4px;
-          border-radius: 4px;
-          width: 100%;
+          padding: 0.25rem;
+          border-radius: 0.25rem;
+          width: -webkit-fill-available;
           border: 0.0625rem solid var(--border-color);
+          z-index: 1;
         }
       }
     }

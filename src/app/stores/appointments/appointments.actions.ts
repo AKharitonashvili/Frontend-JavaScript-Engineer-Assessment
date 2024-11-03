@@ -8,7 +8,12 @@ export const addAppointment = createAction(
 
 export const removeAppointment = createAction(
   '[Appointments] Remove Appointment',
-  props<{ date: string; index: number }>()
+  props<{ date: string; id: string }>()
+);
+
+export const updateAppointment = createAction(
+  '[Appointments] Edit Appointment',
+  props<{ date: string; appointment: Appointments }>()
 );
 
 export const loadAppointments = createAction(

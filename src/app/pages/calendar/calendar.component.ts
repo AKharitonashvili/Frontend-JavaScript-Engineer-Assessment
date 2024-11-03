@@ -4,22 +4,27 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { CalendarSidebarComponent } from './calendar-sidebar/calendar-sidebar.component';
-import { MatButtonModule } from '@angular/material/button';
-import { DayViewComponent } from './day-view/day-view.component';
-import { Appointments } from '../../shared/interfaces/apointments.interface';
 import { Store } from '@ngrx/store';
-import { selectAppointmentsByDate } from '../../stores/appointments/appointments.selectors';
-import { addAppointment } from '../../stores/appointments/appointments.actions';
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { Observable, switchMap } from 'rxjs';
-import { BookingDialogComponent } from '../../ui/dialogs/booking-dialog/booking-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { combineLatest, map, Observable, switchMap } from 'rxjs';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { CalendarSidebarComponent } from './calendar-sidebar/calendar-sidebar.component';
+import { DayViewComponent } from './day-view/day-view.component';
+import { MatButtonModule } from '@angular/material/button';
+import { BookingDialogComponent } from '../../ui/dialogs/booking-dialog/booking-dialog.component';
+import { Appointments } from '../../shared/interfaces/apointments.interface';
 import {
   selectParsedSelectedDay,
   selectSelectedDate,
 } from '../../stores/selected-day/selected-day.selectors';
+import {
+  addAppointment,
+  removeAppointment,
+  updateAppointment,
+} from '../../stores/appointments/appointments.actions';
+import { selectAppointmentsByDate } from '../../stores/appointments/appointments.selectors';
 import { updateSelectedDay } from '../../stores/selected-day/selected-day.actions';
+import { BookinDialogStatus } from '../../ui/dialogs/booking-dialog/interfaces/booking-dialog.interfaces';
 
 @Component({
   selector: 'app-calendar',
@@ -32,7 +37,7 @@ import { updateSelectedDay } from '../../stores/selected-day/selected-day.action
     DatePipe,
   ],
   templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.scss',
+  styleUrls: ['./calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent {
@@ -41,46 +46,61 @@ export class CalendarComponent {
 
   selectedDay = signal<string>('');
 
-  appointments$: Observable<Appointments[]> = this.store
-    .select(selectParsedSelectedDay)
-    .pipe(
+  vm$: Observable<{
+    appointments: Appointments[];
+    selectedDate: Date | undefined;
+  }> = combineLatest([
+    this.store.select(selectParsedSelectedDay).pipe(
       switchMap(selectedDay => {
         this.selectedDay.set(selectedDay);
         return this.store.select(selectAppointmentsByDate(selectedDay));
       })
-    );
+    ),
+    this.store.select(selectSelectedDate),
+  ]).pipe(
+    map(([appointments, selectedDate]) => ({ appointments, selectedDate }))
+  );
 
-  selectedDate$: Observable<Date | undefined> =
-    this.store.select(selectSelectedDate);
-
-  selectedDateChange(selectedDate: Date) {
+  onSelectedDateChange(selectedDate: Date) {
     this.store.dispatch(updateSelectedDay({ selectedDate }));
   }
 
-  updateAppointments(appointment: Appointments) {
-    this.store.dispatch(
-      addAppointment({
-        date: this.selectedDay(),
-        appointment,
-      })
-    );
-  }
-
-  openBookingDialog() {
-    const dialogRef = this.dialog.open(BookingDialogComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.addAppointment(result.startTime, result.endTime, result.label);
-      }
+  openBookingDialog(appointment?: Appointments) {
+    const dialogRef = this.dialog.open(BookingDialogComponent, {
+      data: { appointment },
     });
-  }
 
-  addAppointment(start: string, end: string, label: string) {
-    this.updateAppointments({
-      start,
-      end,
-      label,
+    dialogRef.afterClosed().subscribe(res => {
+      if (!res?.status) return;
+
+      const { status, result } = res;
+      const appointmentData = {
+        start: result?.startTime,
+        end: result?.endTime,
+        label: result?.label,
+      };
+
+      if (status === BookinDialogStatus.CONFIRM) {
+        const id = appointment?.id || Date.now().toString();
+        this.store.dispatch(
+          appointment?.id
+            ? updateAppointment({
+                date: this.selectedDay(),
+                appointment: { ...appointmentData, id },
+              })
+            : addAppointment({
+                date: this.selectedDay(),
+                appointment: { ...appointmentData, id },
+              })
+        );
+      } else if (status === BookinDialogStatus.DELETE && appointment?.id) {
+        this.store.dispatch(
+          removeAppointment({
+            date: this.selectedDay(),
+            id: appointment.id,
+          })
+        );
+      }
     });
   }
 }

@@ -5,3 +5,8 @@ export interface BookingForm {
   endTime: FormControl<string | null>;
   label: FormControl<string | null>;
 }
+
+export enum BookinDialogStatus {
+  CONFIRM = 1,
+  DELETE = 2,
+}
