@@ -16,10 +16,12 @@
       }
 
       .appointment-space {
+        border: none;
         flex-grow: 1;
         height: 4rem;
         border-left: 0.0625rem solid var(--border-color);
         position: relative;
+        background: transparent;
 
         .appointment {
           position: absolute;

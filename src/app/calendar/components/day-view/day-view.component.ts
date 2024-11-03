@@ -30,11 +30,26 @@ export class DayViewComponent {
   @Input({ required: true }) appointments!: Appointments[];
   @Output() editAppointmentClick = new EventEmitter<Appointments>();
   @Output() appointmentDragged = new EventEmitter<Appointments>();
+  @Output() openBookingDialogOnHour = new EventEmitter<Appointments>();
 
   hours: number[] = Array.from({ length: 24 }, (_, i) => i);
 
-  editAppointmentHandler(appointment: Appointments) {
+  editAppointmentHandler(event: Event, appointment: Appointments) {
+    event.stopPropagation();
     this.editAppointmentClick.emit(appointment);
+  }
+
+  openBookingDialogOnHourHandler(event: Event, hour: number) {
+    event.stopPropagation();
+
+    const formattedStartHour = hour.toString().padStart(2, '0');
+    const formattedEndHour = (hour + 1).toString().padStart(2, '0');
+
+    this.openBookingDialogOnHour.emit({
+      start: `${formattedStartHour}:00`,
+      end: `${formattedEndHour}:00`,
+      label: 'Task',
+    });
   }
 
   drop(event: CdkDragDrop<Appointments[]>) {

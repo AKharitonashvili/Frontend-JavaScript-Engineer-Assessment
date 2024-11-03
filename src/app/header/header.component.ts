@@ -22,4 +22,16 @@ export class HeaderComponent {
   @Output() todayBtnClick = new EventEmitter<boolean>();
   @Output() nextBtnClick = new EventEmitter<Date>();
   @Output() prevBtnClick = new EventEmitter<Date>();
+
+  todayBtnClickHandler() {
+    this.todayBtnClick.emit();
+  }
+
+  nextBtnClickHandler() {
+    this.nextBtnClick.emit(this.selectedDate);
+  }
+
+  prevBtnClickHandler() {
+    this.prevBtnClick.emit(this.selectedDate);
+  }
 }

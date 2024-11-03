@@ -22,4 +22,12 @@ export class CalendarSidebarComponent {
   @Input({ required: true }) selectedDate?: Date | null;
   @Output() openBookingDialog = new EventEmitter<void>();
   @Output() selectedChange = new EventEmitter<Date>();
+
+  selectedChangeHandler(date: Date) {
+    this.selectedChange.emit(date);
+  }
+
+  openBookingDialogHandler() {
+    this.openBookingDialog.emit();
+  }
 }

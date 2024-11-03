@@ -3,7 +3,9 @@
     @for (hour of hours; track $index) {
       <div class="time-slot" [attr.data-hour]="hour">
         <div class="time-label">{{ hour }}:00</div>
-        <div class="appointment-space">
+        <button
+          class="appointment-space"
+          (click)="openBookingDialogOnHourHandler($event, hour)">
           @for (
             appointment of appointments | filterAppointments: hour;
             track $index;
@@ -12,7 +14,7 @@
             <button
               class="appointment"
               [ngStyle]="appointment | appointmentSize: hourIndex"
-              (click)="editAppointmentHandler(appointment)"
+              (click)="editAppointmentHandler($event, appointment)"
               cdkDrag
               [cdkDragData]="appointment"
               cdkDragBoundary=".time-slots">
@@ -20,7 +22,7 @@
               {{ appointment.end }}
             </button>
           }
-        </div>
+        </button>
       </div>
     }
   </div>

@@ -16,7 +16,8 @@
       <app-day-view
         [appointments]="vm.appointments"
         (editAppointmentClick)="openBookingDialog($event)"
-        (appointmentDragged)="appointmentDraggedHandler($event)"></app-day-view>
+        (appointmentDragged)="appointmentDraggedHandler($event)"
+        (openBookingDialogOnHour)="openBookingDialog($event)"></app-day-view>
     </section>
   }
 </section>

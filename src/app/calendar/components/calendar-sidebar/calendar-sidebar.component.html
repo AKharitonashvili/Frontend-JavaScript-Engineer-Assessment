@@ -1,6 +1,8 @@
 <section>
-  <button mat-stroked-button (click)="openBookingDialog.emit()">Create</button>
+  <button mat-stroked-button (click)="openBookingDialogHandler()">
+    Create
+  </button>
   <mat-calendar
-    (selectedChange)="selectedChange.emit($event)"
+    (selectedChange)="selectedChangeHandler($event)"
     [selected]="selectedDate"></mat-calendar>
 </section>

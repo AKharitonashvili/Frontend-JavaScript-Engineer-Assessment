@@ -6,16 +6,16 @@
     <h6>Calendar</h6>
   </section>
   <section>
-    <button mat-stroked-button (click)="todayBtnClick.emit()">Today</button>
+    <button mat-stroked-button (click)="todayBtnClickHandler()">Today</button>
 
     <div class="arrow-buttons">
-      <button mat-icon-button (click)="prevBtnClick.emit(selectedDate)">
+      <button mat-icon-button (click)="prevBtnClickHandler()">
         <mat-icon>
           <span class="material-symbols-outlined"> chevron_left </span>
         </mat-icon>
       </button>
 
-      <button mat-icon-button (click)="nextBtnClick.emit(selectedDate)">
+      <button mat-icon-button (click)="nextBtnClickHandler()">
         <mat-icon>
           <span class="material-symbols-outlined"> chevron_right </span>
         </mat-icon>
