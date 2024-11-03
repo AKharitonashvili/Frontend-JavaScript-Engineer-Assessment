@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   FormGroup,
-  FormBuilder,
   Validators,
   ReactiveFormsModule,
+  FormControl,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { BookingForm } from './interfaces/booking-dialog.interfaces';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -24,20 +25,21 @@ import { MatInputModule } from '@angular/material/input';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookingDialogComponent {
-  bookingForm: FormGroup;
+  bookingForm: FormGroup<BookingForm>;
 
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<BookingDialogComponent>
-  ) {
-    this.bookingForm = this.fb.group({
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-      label: ['Task', Validators.required],
+  constructor(private dialogRef: MatDialogRef<BookingDialogComponent>) {
+    this.bookingForm = new FormGroup({
+      startTime: new FormControl<string | null>('', [Validators.required]),
+      endTime: new FormControl<string | null>('', [Validators.required]),
+      label: new FormControl<string | null>('', [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
     });
   }
 
   onSubmit() {
+    console.log(this.bookingForm.controls.label);
     if (this.calculateDuration() < 30) {
       this.bookingForm.setErrors({ minDuration: true });
     } else {
@@ -51,6 +53,8 @@ export class BookingDialogComponent {
 
   calculateDuration(): number {
     const { startTime, endTime } = this.bookingForm.value;
+    if (!startTime || !endTime) return 0;
+
     const [startHour, startMinute] = startTime.split(':').map(Number);
     const [endHour, endMinute] = endTime.split(':').map(Number);
 
