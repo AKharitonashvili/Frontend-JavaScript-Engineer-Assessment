@@ -11,11 +11,14 @@ import { Appointments } from '../../shared/interfaces/apointments.interface';
 import { Store } from '@ngrx/store';
 import { selectAppointmentsByDate } from '../../stores/appointments/appointments.selectors';
 import { addAppointment } from '../../stores/appointments/appointments.actions';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { Observable, switchMap } from 'rxjs';
 import { BookingDialogComponent } from '../../ui/dialogs/booking-dialog/booking-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { selectSelectedDay } from '../../stores/selected-day/selected-day.selectors';
+import {
+  selectParsedSelectedDay,
+  selectSelectedDate,
+} from '../../stores/selected-day/selected-day.selectors';
 import { updateSelectedDay } from '../../stores/selected-day/selected-day.actions';
 
 @Component({
@@ -26,6 +29,7 @@ import { updateSelectedDay } from '../../stores/selected-day/selected-day.action
     MatButtonModule,
     DayViewComponent,
     AsyncPipe,
+    DatePipe,
   ],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
@@ -38,7 +42,7 @@ export class CalendarComponent {
   selectedDay = signal<string>('');
 
   appointments$: Observable<Appointments[]> = this.store
-    .select(selectSelectedDay)
+    .select(selectParsedSelectedDay)
     .pipe(
       switchMap(selectedDay => {
         this.selectedDay.set(selectedDay);
@@ -46,8 +50,11 @@ export class CalendarComponent {
       })
     );
 
-  selectedDateChange(selectedDay: Date) {
-    this.store.dispatch(updateSelectedDay({ selectedDay }));
+  selectedDate$: Observable<Date | undefined> =
+    this.store.select(selectSelectedDate);
+
+  selectedDateChange(selectedDate: Date) {
+    this.store.dispatch(updateSelectedDay({ selectedDate }));
   }
 
   updateAppointments(appointment: Appointments) {

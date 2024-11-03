@@ -1,4 +1,8 @@
 <main>
-  <app-header />
+  <app-header
+    [selectedDate]="(selectedDay$ | async)!"
+    (todayBtnClick)="todayBtnClickHandler()"
+    (nextBtnClick)="selectNextDay($event)"
+    (prevBtnClick)="selectPrevDay($event)" />
   <router-outlet />
 </main>

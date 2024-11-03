@@ -1,6 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import { initialAppointmentsState } from './appointments.state';
 import * as AppointmentsActions from './appointments.actions';
+
+import { AppointmentsState } from './appointments.interface';
+
+export const initialAppointmentsState: AppointmentsState = {};
 
 export const appointmentsReducer = createReducer(
   initialAppointmentsState,

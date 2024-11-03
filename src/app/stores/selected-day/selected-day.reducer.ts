@@ -1,12 +1,22 @@
 import { createReducer, on } from '@ngrx/store';
 import { updateSelectedDay } from './selected-day.actions';
-import { initialSelectedDayState } from './selected-day.state';
+
+export interface SelectedDayState {
+  selectedDate: Date;
+  parsedSelectedDay: string;
+}
+
+export const initialSelectedDayState: SelectedDayState = {
+  parsedSelectedDay: '',
+  selectedDate: new Date(),
+};
 
 export const selectedDayReducer = createReducer(
   initialSelectedDayState,
-  on(updateSelectedDay, (state, { selectedDay }) => ({
+  on(updateSelectedDay, (state, { selectedDate }) => ({
     ...state,
-    selectedDay: parseSelectedDate(selectedDay),
+    parsedSelectedDay: parseSelectedDate(selectedDate),
+    selectedDate,
   }))
 );
 
@@ -16,5 +26,5 @@ function parseSelectedDate(selectedDate: Date): string {
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
 
-  return `${day}-${month}-${year}`;
+  return `${month}-${day}-${year}`;
 }
