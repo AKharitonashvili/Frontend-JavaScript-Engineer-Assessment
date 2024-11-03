@@ -1,7 +1,7 @@
 <div class="day-view">
-  <div class="time-slots">
+  <div class="time-slots" cdkDropList (cdkDropListDropped)="drop($event)">
     @for (hour of hours; track $index) {
-      <div class="time-slot">
+      <div class="time-slot" [attr.data-hour]="hour">
         <div class="time-label">{{ hour }}:00</div>
         <div class="appointment-space">
           @for (
@@ -12,7 +12,10 @@
             <button
               class="appointment"
               [ngStyle]="appointment | appointmentSize: hourIndex"
-              (click)="editAppointmentHandler(appointment)">
+              (click)="editAppointmentHandler(appointment)"
+              cdkDrag
+              [cdkDragData]="appointment"
+              cdkDragBoundary=".time-slots">
               {{ appointment.label }}: {{ appointment.start }} -
               {{ appointment.end }}
             </button>

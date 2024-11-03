@@ -15,7 +15,8 @@
       </div>
       <app-day-view
         [appointments]="vm.appointments"
-        (editAppointmentClick)="openBookingDialog($event)"></app-day-view>
+        (editAppointmentClick)="openBookingDialog($event)"
+        (appointmentDragged)="appointmentDraggedHandler($event)"></app-day-view>
     </section>
   }
 </section>

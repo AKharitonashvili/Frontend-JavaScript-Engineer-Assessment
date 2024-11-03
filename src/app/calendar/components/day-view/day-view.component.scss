@@ -1,10 +1,8 @@
 .day-view {
   .time-slots {
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     padding: 0rem 1rem;
-    height: calc(100vh - 14rem);
 
     .time-slot {
       display: flex;

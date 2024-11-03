@@ -103,4 +103,13 @@ export class CalendarComponent {
       }
     });
   }
+
+  appointmentDraggedHandler(appointment: Appointments) {
+    this.store.dispatch(
+      updateAppointment({
+        date: this.selectedDay(),
+        appointment,
+      })
+    );
+  }
 }
