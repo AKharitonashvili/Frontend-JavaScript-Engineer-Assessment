@@ -1,4 +1,6 @@
 <section>
   <button mat-stroked-button (click)="openDiallog.emit()">Create</button>
-  <mat-calendar></mat-calendar>
+  <mat-calendar
+    (selectedChange)="selectedChange.emit($event)"
+    [(selected)]="selectedDate"></mat-calendar>
 </section>

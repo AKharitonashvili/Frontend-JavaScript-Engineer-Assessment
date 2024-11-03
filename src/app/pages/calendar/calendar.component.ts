@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { CalendarSidebarComponent } from './calendar-sidebar/calendar-sidebar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { DayViewComponent } from './day-view/day-view.component';
@@ -7,9 +12,11 @@ import { Store } from '@ngrx/store';
 import { selectAppointmentsByDate } from '../../stores/appointments/appointments.selectors';
 import { addAppointment } from '../../stores/appointments/appointments.actions';
 import { AsyncPipe } from '@angular/common';
-import { tap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { BookingDialogComponent } from '../../ui/dialogs/booking-dialog/booking-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { selectSelectedDay } from '../../stores/selected-day/selected-day.selectors';
+import { updateSelectedDay } from '../../stores/selected-day/selected-day.actions';
 
 @Component({
   selector: 'app-calendar',
@@ -28,26 +35,28 @@ export class CalendarComponent {
   private readonly store = inject(Store);
   private readonly dialog = inject(MatDialog);
 
-  appointments$ = this.store
-    .select(selectAppointmentsByDate(this.getCurrentDate()))
-    .pipe(tap(v => console.log(v)));
+  selectedDay = signal<string>('');
+
+  appointments$: Observable<Appointments[]> = this.store
+    .select(selectSelectedDay)
+    .pipe(
+      switchMap(selectedDay => {
+        this.selectedDay.set(selectedDay);
+        return this.store.select(selectAppointmentsByDate(selectedDay));
+      })
+    );
+
+  selectedDateChange(selectedDay: Date) {
+    this.store.dispatch(updateSelectedDay({ selectedDay }));
+  }
 
   updateAppointments(appointment: Appointments) {
     this.store.dispatch(
       addAppointment({
-        date: this.getCurrentDate(),
+        date: this.selectedDay(),
         appointment,
       })
     );
-  }
-
-  getCurrentDate(): string {
-    const date = new Date();
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-
-    return `${day}-${month}-${year}`;
   }
 
   openBookingDialog() {

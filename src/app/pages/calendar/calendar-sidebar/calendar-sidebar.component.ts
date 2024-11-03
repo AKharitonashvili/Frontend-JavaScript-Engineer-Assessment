@@ -21,6 +21,7 @@ import { Appointments } from '../../../shared/interfaces/apointments.interface';
 })
 export class CalendarSidebarComponent {
   @Input({ required: true }) appointments!: Appointments[];
-  @Output() updateAppointment = new EventEmitter<Appointments>();
   @Output() openDiallog = new EventEmitter<void>();
+  @Output() selectedChange = new EventEmitter<Date>();
+  selectedDate: Date = new Date();
 }

@@ -6,6 +6,7 @@ export const appointmentsReducer = createReducer(
   initialAppointmentsState,
   on(AppointmentsActions.addAppointment, (state, { date, appointment }) => {
     const existingAppointments = state[date] || [];
+
     return {
       ...state,
       [date]: [...existingAppointments, appointment],

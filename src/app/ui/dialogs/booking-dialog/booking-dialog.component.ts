@@ -43,7 +43,7 @@ export class BookingDialogComponent {
     } else {
       this.bookingForm.setErrors(null);
     }
-    console.log(this.calculateDuration());
+
     if (this.bookingForm.valid) {
       this.dialogRef.close(this.bookingForm.value);
     }
