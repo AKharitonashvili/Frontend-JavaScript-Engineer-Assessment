@@ -1,0 +1,20 @@
+.error-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  max-width: 25rem;
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+
+  .error {
+    font-size: 0.875rem;
+    color: red;
+    padding: 1rem 0rem;
+    text-align: center;
+  }
+}

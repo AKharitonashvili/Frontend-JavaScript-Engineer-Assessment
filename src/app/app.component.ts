@@ -11,6 +11,7 @@ import { AsyncPipe } from '@angular/common';
 import { updateSelectedDay } from './calendar/stores/selected-day/selected-day.actions';
 import { selectSelectedDate } from './calendar/stores/selected-day/selected-day.selectors';
 import { HeaderComponent } from './header/header.component';
+import { loadAppointments } from './calendar/stores/appointments/appointments.actions';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectToday();
+    this.store.dispatch(loadAppointments());
   }
 
   todayBtnClickHandler(): void {

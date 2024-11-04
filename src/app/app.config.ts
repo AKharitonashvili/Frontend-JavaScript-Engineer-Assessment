@@ -8,6 +8,7 @@ import { appointmentsReducer } from './calendar/stores/appointments/appointments
 import { APPOINTMENTS } from './calendar/stores/appointments/appointments.selectors';
 import { selectedDayReducer } from './calendar/stores/selected-day/selected-day.reducer';
 import { SELECTED_DAY } from './calendar/stores/selected-day/selected-day.selectors';
+import { AppointmentsEffects } from './calendar/stores/appointments/appointments.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,6 @@ export const appConfig: ApplicationConfig = {
       reducer: appointmentsReducer,
     }),
     provideState({ name: SELECTED_DAY, reducer: selectedDayReducer }),
-    provideEffects(),
+    provideEffects([AppointmentsEffects]),
   ],
 };

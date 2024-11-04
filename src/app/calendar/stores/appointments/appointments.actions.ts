@@ -17,6 +17,24 @@ export const updateAppointment = createAction(
 );
 
 export const loadAppointments = createAction(
-  '[Appointments] Load Appointments',
+  '[Appointments] Load Appointments'
+);
+
+export const loadAppointmentsSuccess = createAction(
+  '[Appointments] Load Appointments Success',
   props<{ appointments: Record<string, Appointments[]> }>()
+);
+
+export const loadAppointmentsFailure = createAction(
+  '[Appointments] Load Appointments Failure',
+  props<{ error: string }>()
+);
+
+export const saveAppointmentsSuccess = createAction(
+  '[Appointments] Save Appointments Success'
+);
+
+export const saveAppointmentsFailure = createAction(
+  '[Appointments] Save Appointments Failure',
+  props<{ error: string }>()
 );

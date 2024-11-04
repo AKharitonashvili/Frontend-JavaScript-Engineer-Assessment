@@ -6,5 +6,10 @@ export const APPOINTMENTS = 'appointments';
 export const selectAppointmentsState =
   createFeatureSelector<AppointmentsState>(APPOINTMENTS);
 
+export const selectAllAppointmentsByDate = createSelector(
+  selectAppointmentsState,
+  state => state.appointments
+);
+
 export const selectAppointmentsByDate = (date: string) =>
-  createSelector(selectAppointmentsState, state => state[date] || []);
+  createSelector(selectAllAppointmentsByDate, state => state[date] || []);

@@ -5,4 +5,8 @@ export interface Appointments {
   id?: string;
 }
 
-export type AppointmentsState = Record<string, Appointments[]>;
+export interface AppointmentsState {
+  appointments: Record<string, Appointments[]>;
+  loading?: boolean;
+  error?: string | null;
+}

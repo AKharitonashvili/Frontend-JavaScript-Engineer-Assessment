@@ -1,0 +1,15 @@
+<section class="error-body">
+  <div class="action-buttons">
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <p class="error">
+    @if (data.message; as message) {
+      {{ message }}
+    } @else {
+      An error occurred while trying to perform the requested action. Please try
+      again later.
+    }
+  </p>
+</section>
