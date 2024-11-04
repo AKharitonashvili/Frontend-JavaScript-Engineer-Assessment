@@ -32,10 +32,16 @@ export class AppointmentSizePipe implements PipeTransform {
         -((durationMinutes - remainingMinutesInHour) / 60) * 100;
     }
 
+    console.log({
+      top: `${topPercentage}%`,
+      bottom: `${bottomPercentage}%`,
+      left: `${index * 5 || 0}%`,
+    });
+
     return {
       top: `${topPercentage}%`,
       bottom: `${bottomPercentage}%`,
-      left: `${index * 5}%`,
+      left: `${index * 5 || 0}%`,
     };
   }
 }

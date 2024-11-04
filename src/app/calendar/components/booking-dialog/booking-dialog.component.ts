@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {
   BookingForm,
-  BookinDialogStatus,
+  BookingDialogStatus,
 } from './interfaces/booking-dialog.interfaces';
 import { minDuration } from './validators/min-duration.validator';
 import { MatIconModule } from '@angular/material/icon';
@@ -66,12 +66,12 @@ export class BookingDialogComponent implements OnInit {
     if (this.bookingForm.valid) {
       this.dialogRef.close({
         result: this.bookingForm.value,
-        status: BookinDialogStatus.CONFIRM,
+        status: BookingDialogStatus.CONFIRM,
       });
     }
   }
 
   removeAppointment() {
-    this.dialogRef.close({ status: BookinDialogStatus.DELETE });
+    this.dialogRef.close({ status: BookingDialogStatus.DELETE });
   }
 }

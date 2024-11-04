@@ -54,34 +54,66 @@ export class DayViewComponent {
 
   drop(event: CdkDragDrop<Appointments[]>) {
     const dropY = event.dropPoint.y;
-    const timeSlotsContainer = event.container.element
-      .nativeElement as HTMLElement;
-    const containerTop = timeSlotsContainer.getBoundingClientRect().top;
-    const containerHeight = timeSlotsContainer.offsetHeight;
+    const container = event.container.element.nativeElement as HTMLElement;
+    const containerTop = container.getBoundingClientRect().top;
     const relativeY = dropY - containerTop;
-    const hourHeight = containerHeight / 24;
-    const targetHour = Math.floor(relativeY / hourHeight);
+    const targetHour = Math.floor((relativeY / container.offsetHeight) * 24);
 
     const draggedAppointment = event.item.data as Appointments;
-
     const [startHour, startMinute] = draggedAppointment.start
       .split(':')
       .map(Number);
-    const [endHour, endMinute] = draggedAppointment.end.split(':').map(Number);
 
-    const durationInMinutes =
-      endHour * 60 + endMinute - (startHour * 60 + startMinute);
+    if (startHour === targetHour && startMinute !== 0) {
+      const durationInMinutes =
+        parseInt(draggedAppointment.end.split(':')[0]) * 60 +
+        parseInt(draggedAppointment.end.split(':')[1]) -
+        (startHour * 60 + startMinute);
 
-    const newStartHour = targetHour;
-    const newStartMinute = startMinute;
-    const newEndHour = newStartHour + Math.floor(durationInMinutes / 60);
-    const newEndMinute = (startMinute + durationInMinutes) % 60;
+      this.emitUpdatedAppointment(
+        draggedAppointment,
+        targetHour,
+        durationInMinutes,
+        true
+      );
+      return;
+    }
 
-    const newStartTime = `${newStartHour.toString().padStart(2, '0')}:${newStartMinute.toString().padStart(2, '0')}`;
+    if (startHour !== targetHour) {
+      const [endHour, endMinute] = draggedAppointment.end
+        .split(':')
+        .map(Number);
+      const durationInMinutes =
+        endHour * 60 + endMinute - (startHour * 60 + startMinute);
+
+      this.emitUpdatedAppointment(
+        draggedAppointment,
+        targetHour,
+        durationInMinutes,
+        false
+      );
+    }
+  }
+
+  private emitUpdatedAppointment(
+    appointment: Appointments,
+    targetHour: number,
+    durationInMinutes: number,
+    snapToTopOfHour: boolean
+  ) {
+    const newStartMinute = snapToTopOfHour
+      ? 0
+      : parseInt(appointment.start.split(':')[1]);
+    const newStartTime = `${targetHour.toString().padStart(2, '0')}:${newStartMinute.toString().padStart(2, '0')}`;
+
+    const totalEndMinutes =
+      targetHour * 60 + newStartMinute + durationInMinutes;
+    const newEndHour = Math.floor(totalEndMinutes / 60);
+    const newEndMinute = totalEndMinutes % 60;
     const newEndTime = `${newEndHour.toString().padStart(2, '0')}:${newEndMinute.toString().padStart(2, '0')}`;
 
     const updatedAppointment = {
-      ...draggedAppointment,
+      ...appointment,
       start: newStartTime,
       end: newEndTime,
     };

@@ -24,7 +24,7 @@ import {
   selectSelectedDate,
 } from './stores/selected-day/selected-day.selectors';
 import { BookingDialogComponent } from './components/booking-dialog/booking-dialog.component';
-import { BookinDialogStatus } from './components/booking-dialog/interfaces/booking-dialog.interfaces';
+import { BookingDialogStatus } from './components/booking-dialog/interfaces/booking-dialog.interfaces';
 
 @Component({
   selector: 'app-calendar',
@@ -80,7 +80,7 @@ export class CalendarComponent {
         label: result?.label,
       };
 
-      if (status === BookinDialogStatus.CONFIRM) {
+      if (status === BookingDialogStatus.CONFIRM) {
         const id = appointment?.id || Date.now().toString();
         this.store.dispatch(
           appointment?.id
@@ -93,7 +93,7 @@ export class CalendarComponent {
                 appointment: { ...appointmentData, id },
               })
         );
-      } else if (status === BookinDialogStatus.DELETE && appointment?.id) {
+      } else if (status === BookingDialogStatus.DELETE && appointment?.id) {
         this.store.dispatch(
           removeAppointment({
             date: this.selectedDay(),
